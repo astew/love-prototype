@@ -7,19 +7,45 @@ KeyMgr.release_bindings = {}
 	
 	
 	function KeyMgr:setPressBinding(key, callback)
-		self.press_bindings[key] = callback
+		if (type(key) == "table") then
+			for k, v in pairs(key) do
+				print(k)
+				self.press_bindings[k] = callback
+			end
+		else
+			self.press_bindings[key] = callback
+		end
 	end
 	
 	function KeyMgr:removePressBinding(key)
-		self.bindings[key] = nil
+		if (type(key) == "table") then
+			for k,v in ipairs(key) do
+				self.press_bindings[k] = nil
+			end
+		else
+			self.press_bindings[key] = nil
+		end
 	end
 	
 	function KeyMgr:setReleaseBinding(key, callback)
-		self.release_bindings[key] = callback
+		if (type(key) == "table") then
+			for k, v in pairs(key) do
+				print(k)
+				self.release_bindings[k] = callback
+			end
+		else
+			self.release_bindings[key] = callback
+		end
 	end
 	
 	function KeyMgr:removeReleaseBinding(key)
-		self.release_bindings[key] = nil
+		if (type(key) == "table") then
+			for k,v in ipairs(key) do
+				self.release_bindings[k] = nil
+			end
+		else
+			self.release_bindings[key] = nil
+		end
 	end
 	
 	function KeyMgr:removeAllBindings()

@@ -25,13 +25,15 @@ local Hero = Actor:new()
 		self:setHealth(200)
 		
 		self:setLives(4)
+		
+		--the direction the *user* is telling the
+		--hero to move
+		self.move_dir = 0
 	end
 	
 	function Hero:draw()
 		self.shape:draw("fill")
 	end
-	
-	
 	
 	function Hero:update(dt)
 				self.bound_left = false
@@ -40,9 +42,9 @@ local Hero = Actor:new()
 				local dx = 0
 				local dy = 0
 				
-				if love.keyboard.isDown("left") and self.bound_left == false then
+				if (self.move_dir == -1) then
 					self:accelerate(-1 * self.ax*dt,0)
-				elseif love.keyboard.isDown("right") and self.bound_right == false then
+				elseif (self.move_dir == 1) then
 					self:accelerate(self.ax*dt,0)
 				else
 					if  ( self:getXVelocity() == 0 ) then
@@ -71,6 +73,10 @@ local Hero = Actor:new()
 		if vy == 0 then
 			self:setYVelocity(-300 - 0.25*math.abs(vx))
 		end
+	end
+	
+	function Hero:moveDir(dir)
+		self.move_dir = dir
 	end
 	
 	---------------POSITION/VELOCITY----------------
@@ -169,5 +175,6 @@ local Hero = Actor:new()
 	function Hero:onNoLives()
 		love.event.push('quit') -- Quit the game.
 	end
+	
 	
 return Hero

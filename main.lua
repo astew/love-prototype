@@ -61,8 +61,17 @@ function setupKeyMgr()
 	love.keypressed = function(key, unicode)	KeyMgr:keyPressed(key)	end
 	love.keyreleased = function(key, unicode)	KeyMgr:keyReleased(key)	end
 	
-	KeyMgr:setPressBinding("up", function() Hero:jump() end)
+	local leftkeys = {left=0,a=0}
+	local rightkeys = {right=0,d=0}
+	
+	KeyMgr:setPressBinding({up=0,w=0}, function() Hero:jump() end)
 	KeyMgr:setPressBinding(" ", function() UpdateMgr:togglePause() end)
+	KeyMgr:setPressBinding(leftkeys, function() Hero:moveDir(-1) end)
+	KeyMgr:setPressBinding(rightkeys, function() Hero:moveDir(1) end)
+	
+	local stopMv = function() Hero:moveDir(0)	end
+	KeyMgr:setReleaseBinding(leftkeys, stopMv)
+	KeyMgr:setReleaseBinding(rightkeys, stopMv)
 end
 
 function love.quit()
