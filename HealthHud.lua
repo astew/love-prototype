@@ -2,11 +2,13 @@
 local HUD = require "class/HUD"
 
 local HealthHud = HUD:new()
+local ImgMgr = require("mgr/ImgMgr")
 
 function HealthHud:init(...)
 	HUD:init()
 	self.hero = arg[1]
-	self.life_image = arg[2]
+	
+	ImgMgr:loadImage("heart", "res/graphics/heart.png")
 	
 	self.doDraw = true
 	
@@ -27,7 +29,7 @@ function HealthHud:draw()
 	
 	for i=1, self.hero:getLives(), 1 do
 		local xloc = self.width - 40 - i*20
-		love.graphics.draw(self.life_image, xloc, 20)
+		ImgMgr:draw("heart", xloc, 20)
 	end
 	
 	love.graphics.setColor(5,200,5,255)

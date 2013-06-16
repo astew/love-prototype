@@ -2,7 +2,7 @@
 local Actor = require "class/Actor"
 
 local Hero = Actor:new()
-
+local ImgMgr = require("mgr/ImgMgr")
 
 
 	function Hero:init(...)
@@ -11,6 +11,8 @@ local Hero = Actor:new()
 		local x = arg[2]
 		local y = arg[3]
 		self.shape = self.collider:addRectangle(x,y,16,16)
+		ImgMgr:loadImage("hero", "res/graphics/ogmo.png")
+		
 		self.velocity = {x = 0, y = 1}
 		
 		
@@ -32,7 +34,9 @@ local Hero = Actor:new()
 	end
 	
 	function Hero:draw()
-		self.shape:draw("fill")
+		local x,y = self.shape:center()
+		ImgMgr:draw("hero", x,y,0,1,1,8,8)
+	--	self.shape:draw("fill")
 	end
 	
 	function Hero:update(dt)
@@ -77,6 +81,10 @@ local Hero = Actor:new()
 	
 	function Hero:moveDir(dir)
 		self.move_dir = dir
+	end
+	
+	function Hero:getMoveDir()
+		return self.move_dir
 	end
 	
 	---------------POSITION/VELOCITY----------------

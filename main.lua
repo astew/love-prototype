@@ -69,9 +69,8 @@ function setupKeyMgr()
 	KeyMgr:setPressBinding(leftkeys, function() Hero:moveDir(-1) end)
 	KeyMgr:setPressBinding(rightkeys, function() Hero:moveDir(1) end)
 	
-	local stopMv = function() Hero:moveDir(0)	end
-	KeyMgr:setReleaseBinding(leftkeys, stopMv)
-	KeyMgr:setReleaseBinding(rightkeys, stopMv)
+	KeyMgr:setReleaseBinding(leftkeys, function() if (Hero:getMoveDir() == -1) then Hero:moveDir(0) end end)
+	KeyMgr:setReleaseBinding(rightkeys, function() if (Hero:getMoveDir() == 1) then Hero:moveDir(0) end end)
 end
 
 function love.quit()
