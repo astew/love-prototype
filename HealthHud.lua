@@ -1,5 +1,5 @@
 
-local HUD = require "HUD"
+local HUD = require "class/HUD"
 
 local HealthHud = HUD:new()
 

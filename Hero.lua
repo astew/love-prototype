@@ -1,5 +1,5 @@
 
-local Actor = require "Actor"
+local Actor = require "class/Actor"
 
 local Hero = Actor:new()
 

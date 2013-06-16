@@ -1,12 +1,12 @@
-local loader = require("Advanced-Tiled-Loader/Loader")
-loader.path = "maps/"
+local loader = require("lib/Advanced-Tiled-Loader/Loader")
+loader.path = "res/maps/"
 
-local HC = require("HardonCollider")
+local HC = require("lib/HardonCollider")
 
 local hud = require("HealthHud")
-local IfaceMgr = require("IfaceMgr")
-local UpdateMgr = require("UpdateMgr")
-local KeyMgr = require("KeyMgr")
+local IfaceMgr = require("mgr/IfaceMgr")
+local UpdateMgr = require("mgr/UpdateMgr")
+local KeyMgr = require("mgr/KeyMgr")
 
 local hero
 local collider
@@ -19,7 +19,7 @@ function love.load()
     map = loader.load("level.tmx")
     collider = HC(64, on_collide, collision_stop)
     allSolidTiles = findSolidTiles(map)
-	heart_icon = love.graphics.newImage("heart.png")
+	heart_icon = love.graphics.newImage("res/graphics/heart.png")
     setupHero(32,32)
 	hud:init(Hero, heart_icon)
 	
