@@ -76,6 +76,7 @@ Actor.health.current = 1
 	
 	function Actor:damage(v)
 		self:deltaHealth(-1*v)
+		print("Damaged..")
 	end
 	function Actor:heal(v)
 		self:deltaHealth(v)

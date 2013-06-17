@@ -19,8 +19,6 @@ local ImgMgr = require("mgr/ImgMgr")
 		self.max_speed_x = 500
 		self.gravity = 512
 		self.ax = 300
-		self.bound_left = false
-		self.bound_right = false
 		self.onDeath_callback = nil
 		
 		self:setMaxHealth(200)
@@ -31,6 +29,9 @@ local ImgMgr = require("mgr/ImgMgr")
 		--the direction the *user* is telling the
 		--hero to move
 		self.move_dir = 0
+		
+		
+		self.shape.coll_class = "hero"
 	end
 	
 	function Hero:draw()
@@ -40,16 +41,12 @@ local ImgMgr = require("mgr/ImgMgr")
 	end
 	
 	function Hero:update(dt)
-				self.bound_left = false
-				self.bound_right = false
 	
 				local dx = 0
 				local dy = 0
 				
-				if (self.move_dir == -1) then
-					self:accelerate(-1 * self.ax*dt,0)
-				elseif (self.move_dir == 1) then
-					self:accelerate(self.ax*dt,0)
+				if (self.move_dir == -1 or self.move_dir == 1) then
+					self:accelerate(self.move_dir * self.ax*dt,0)
 				else
 					if  ( self:getXVelocity() == 0 ) then
 					elseif (math.abs(self:getXVelocity()) < self.ax*dt) then
@@ -63,19 +60,20 @@ local ImgMgr = require("mgr/ImgMgr")
 				
 				dx = self:getXVelocity() * dt
 
-				if self:getYVelocity() ~= 0 then
+		--		if self:getYVelocity() ~= 0 then
 					dy = self:getYVelocity()*dt
 					self:accelerate(0,self.gravity*dt)
-				end
+		--		end
 
 				self:move(dx, dy)
+				
 	end
 	
 	
 	function Hero:jump()
-		local vx,vy = self:getVelocity()
-		if vy == 0 then
-			self:setYVelocity(-300 - 0.25*math.abs(vx))
+		if (self.can_jump) then
+			self:setYVelocity(-300 - 0.25 * math.abs(self:getXVelocity()))
+			self.can_jump = false
 		end
 	end
 	
@@ -184,5 +182,43 @@ local ImgMgr = require("mgr/ImgMgr")
 		love.event.push('quit') -- Quit the game.
 	end
 	
+	-----------------COLLISION-------------------
+	function Hero:collideWithSolid(dt, shape_a, shape_b, dx, dy)
+		
+		if (shape_b == Hero.shape) then
+			shape_a, shape_b = shape_b, shape_a
+			dx, dy = -1*dx, -1*dy
+		end
+		
+		
+		-- collision hero entites with level geometry
+		shape_a:move(dx*1.1, dy*1.1)
+
+		if (dx ~= 0) then
+			self:setXVelocity(0)
+		end
+		
+		if (dy ~= 0) then
+			self:setYVelocity(0)
+			self.can_jump = (dy < 0)
+		end
+		
+		
+		if (shape_b.hurty) then	ouch() end
+		
+	--	if math.abs(dy) > math.abs(dx) then
+	--		if dy < 0 then
+	--			Hero:setYVelocity(0)
+	--		else
+	--			Hero:setYVelocity(1)
+	--		end
+	--	end
+	end
+	
+	function Hero:endCollideWithSolid(dt, shape_a, shape_b)
+		if self:getYVelocity() == 0 then
+			--self:setYVelocity(1)
+		end
+	end
 	
 return Hero
