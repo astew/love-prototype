@@ -26,6 +26,12 @@
     <property name="hero" value="true"/>
    </properties>
   </tile>
+  <tile id="33">
+   <properties>
+    <property name="actor" value="true"/>
+    <property name="met" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="ground" width="32" height="32">
   <data encoding="base64" compression="zlib">
@@ -34,7 +40,7 @@
  </layer>
  <layer name="entities" width="32" height="32" opacity="0.4">
   <data encoding="base64" compression="zlib">
-   eJztzjEBAAAIA6BVsX9JW8xDSEACAABA01wHeGkBYXgAIg==
+   eJztzkERAAAEADBV6B9SBi/nbAkWAQAATNR2gPNyO8BLDQJ/AEQ=
   </data>
  </layer>
 </map>

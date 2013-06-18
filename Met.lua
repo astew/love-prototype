@@ -1,129 +1,107 @@
 
 local Actor = require "class/Actor"
 
-local Hero = Actor:new()
+local Met = Actor:new()
 local ImgMgr = require("mgr/ImgMgr")
 
 
-	function Hero:init(...)
+	function Met:init(...)
 		self.collider = arg[1]
-		
+
 		local x = arg[2]
 		local y = arg[3]
 		self.shape = self.collider:addRectangle(x,y,16,16)
-		ImgMgr:loadImage("hero", "res/graphics/ogmo.png")
-		
-		self.velocity = {x = 0, y = 1}
-		
-		
-		self.max_speed_x = 500
-		self.gravity = 512
-		self.ax = 300
+		ImgMgr:loadImage("met", "res/graphics/met.png")
+
+		self.velocity = {x = 100, y = 1}
+        self.gravity = 512
+
+		self.max_speed_x = 100
 		self.onDeath_callback = nil
-		
-		self:setMaxHealth(200)
-		self:setHealth(200)
-		
-		self:setLives(4)
-		
-		--the direction the *user* is telling the
-		--hero to move
-		self.move_dir = 0
-		
-		
-		self.shape.coll_class = "hero"
+
+		self:setMaxHealth(50)
+		self:setHealth(50)
+
+		self:setLives(1)
+
+		self.move_dir = -1
+
+		self.shape.coll_class = "met"
 	end
-	
-	function Hero:draw()
+
+	function Met:draw()
 		local x,y = self.shape:center()
-		ImgMgr:draw("hero", x,y,0,1,1,8,8)
+		ImgMgr:draw("met", x,y,0,1,1,8,8)
 	--	self.shape:draw("fill")
 	end
-	
-	function Hero:update(dt)
-	
-				local dx = 0
-				local dy = 0
-				
-				if (self.move_dir == -1 or self.move_dir == 1) then
-					self:accelerate(self.move_dir * self.ax*dt,0)
-				else
-					if  ( self:getXVelocity() == 0 ) then
-					elseif (math.abs(self:getXVelocity()) < self.ax*dt) then
-						self:setXVelocity(0)
-					else 
-						self:accelerate(-1 * self:xDir() * (self.ax * dt),0)
-					end
-				end
-				
-				self:capXSpeed()
-				
-				dx = self:getXVelocity() * dt
 
-		--		if self:getYVelocity() ~= 0 then
-					dy = self:getYVelocity()*dt
-					self:accelerate(0,self.gravity*dt)
-		--		end
+	function Met:update(dt)
 
-				self:move(dx, dy)
-				
+        local dx = 0
+        local dy = 0
+
+        if (self:getMoveDir() ~= 0) then
+            self:setXVelocity(self:getMoveDir() * self.max_speed_x)
+        end
+
+        self:capXSpeed()
+
+        dx = self:getXVelocity()*dt
+        dy = self:getYVelocity()*dt
+        self:accelerate(0,self.gravity*dt)
+
+        self:move(dx, dy)
+
 	end
-	
-	
-	function Hero:jump()
-		if (self.can_jump) then
-			self:setYVelocity(-300 - 0.25 * math.abs(self:getXVelocity()))
-			self.can_jump = false
-		end
-	end
-	
-	function Hero:moveDir(dir)
+
+
+	function Met:moveDir(dir)
 		self.move_dir = dir
 	end
-	
-	function Hero:getMoveDir()
+
+	function Met:getMoveDir()
 		return self.move_dir
 	end
-	
+
 	---------------POSITION/VELOCITY----------------
-	
-	function Hero:getXPosition()
+
+	function Met:getXPosition()
 		local x,y = self.shape:center()
 		return x
 	end
-	
-	function Hero:getYPosition()
+
+	function Met:getYPosition()
 		local x,y = self.shape:center()
 		return y
 	end
-	
-	function Hero:getXVelocity()
+
+	function Met:getXVelocity()
 		return self.velocity.x
 	end
-	
-	function Hero:getYVelocity()
+
+	function Met:getYVelocity()
 		return self.velocity.y
 	end
-	
-	function Hero:move(dx, dy)
+
+	function Met:move(dx, dy)
 		self.shape:move(dx,dy)
 	end
-	
-	
+
+
 	function Actor:setXPosition(x)
 		local xx,yy = self:getPosition()
 		self.shape:moveTo(x,yy)
 	end
-	function Actor:setYPosition(y)	
+	function Actor:setYPosition(y)
 		local xx,yy = self:getPosition()
 		self.shape:moveTo(xx,y)
 	end
-	
-	function Hero:setPosition(x,y)
+
+	function Met:setPosition(x,y)
 		self.shape:moveTo(x,y)
 	end
-	
-	function Hero:xDir()
+
+	function Met:xDir()
 		if (self.velocity.x == 0) then
 			return 0
 		elseif (self.velocity.x > 0) then
@@ -132,61 +110,60 @@ local ImgMgr = require("mgr/ImgMgr")
 			return -1
 		end
 	end
-	
-	function Hero:accelerate(dvx,dvy)
+
+	function Met:accelerate(dvx,dvy)
 		self.velocity.x = self.velocity.x + dvx
 		self.velocity.y = self.velocity.y + dvy
 		self:capXSpeed()
 	end
-	
-	
+
 	function Actor:setXVelocity(vx)
 		self.velocity.x = vx
 		self:capXSpeed()
 	end
-	
+
 	function Actor:setYVelocity(vy)
 		self.velocity.y = vy
 	end
-	
-	function Hero:capXSpeed()
+
+	function Met:capXSpeed()
 		if ( math.abs(self.velocity.x) > self.max_speed_x) then
-			self.velocity.x = self:xDir() * self.max_speed_x
+			self.velocity.x = self:getMoveDir() * self.max_speed_x
 		end
 	end
-	
+
 	-----------------HEALTH------------------
-	
-	function Hero:setLives(v)
+
+	function Met:setLives(v)
 		self.lives = v
 	end
-	
-	function Hero:getLives()
+
+	function Met:getLives()
 		return self.lives
 	end
-	
-	function Hero:onDeath()
+
+	function Met:onDeath()
 		self:setHealth(self:getMaxHealth())
 		self.lives = self.lives - 1
-		
+
 		if (self.lives == -1) then
 			self:onNoLives()
 		end
-		
+
 		if (self.onDeath_callback ~= nil) then
 			self.onDeath_callback()
 		end
 	end
-	
-	function Hero:onNoLives()
+
+	function Met:onNoLives()
 		if (self.noLives_callback ~= nil) then
 			self.noLives_callback()
 		end
 	end
-	
+
 	-----------------COLLISION-------------------
-	function Hero:collideWithSolid(dt, shape_a, shape_b, dx, dy)
-		
+	function Met:collideWithSolid(dt, shape_a, shape_b, dx, dy)
+
         if (shape_a == self.shape) then
 		elseif (shape_b == self.shape) then
 			shape_a, shape_b = shape_b, shape_a
@@ -194,23 +171,35 @@ local ImgMgr = require("mgr/ImgMgr")
         else
             return
 		end
-		
-		
+
+
 		-- collision hero entites with level geometry
 		shape_a:move(dx*1.1, dy*1.1)
 
 		if (dx ~= 0) then
 			self:setXVelocity(0)
 		end
-		
+
 		if (dy ~= 0) then
 			self:setYVelocity(0)
-			self.can_jump = (dy < 0)
 		end
-		
-		
+
+        local floor_continues = false
+        local ax,ay = shape_a:center()
+        ax = ax + (8*self:getMoveDir())
+        ay = ay + 16
+        for _, shape in ipairs(self.collider:shapesAt(ax,ay)) do
+            floor_continues = true
+        end
+
+        if floor_continues then
+        else
+            self:moveDir(self:getMoveDir()*-1)
+        end
+
+
 		if (shape_b.hurty) then	self:ouch() end
-		
+
 	--	if math.abs(dy) > math.abs(dx) then
 	--		if dy < 0 then
 	--			Hero:setYVelocity(0)
@@ -219,15 +208,15 @@ local ImgMgr = require("mgr/ImgMgr")
 	--		end
 	--	end
 	end
-	
-	function Hero:endCollideWithSolid(dt, shape_a, shape_b)
+
+	function Met:endCollideWithSolid(dt, shape_a, shape_b)
 		if self:getYVelocity() == 0 then
 			--self:setYVelocity(1)
 		end
 	end
-	
-	function Hero:ouch()
+
+	function Met:ouch()
 		self:setYVelocity(-150)
 		self:damage(17)
 	end
-return Hero
+return Met
