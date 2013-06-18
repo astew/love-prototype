@@ -1,3 +1,6 @@
+
+local GameState = require "class/GameState"
+
 local loader = require("lib/Advanced-Tiled-Loader/Loader")
 loader.path = "res/maps/"
 
@@ -10,41 +13,45 @@ local KeyMgr = require("mgr/KeyMgr")
 local CollisionMgr = require("mgr/CollisionMgr")
 local ImgMgr = require("mgr/ImgMgr")
 
-local hero
 local collider
 local allSolidTiles
 local heart_icon
 local b_count = 0
 
-function love.load() 
+local GameMain = GameState:new()
+
+function GameMain:load(...)
+
+	self.done_callback = arg[1]
 
     print("Started")
     map = loader.load("level.tmx")
     collider = HC(64, on_collide, collision_stop)
-    allSolidTiles = findSolidTiles(map)
+    allSolidTiles = self:findSolidTiles(map)
 	
 	ImgMgr:loadImage("bullet", 	"res/graphics/bullet.png")
 	
-    setupHero(32,32)
+    self:setupHero(32,32)
 	hud:init(Hero)
 	
-	setupIfaceMgr()
-	setupUpdateMgr()
-	setupKeyMgr()
-	setupCollisionMgr()
+	self:setupIfaceMgr()
+	self:setupUpdateMgr()
+	self:setupKeyMgr()
+	self:setupCollisionMgr()
 	
-	create_bullet_factory()
+	self:create_bullet_factory()
 end
 
-function setupHero(x, y)
+function GameMain:setupHero(x, y)
 	Hero = require("Hero")
 	Hero:init(collider,x,y)
 	
 	Hero.onDeath_callback = function()	Hero:setPosition(32,32)	end
+	Hero.noLives_callback = self.done_callback
 end
 
 
-function setupIfaceMgr()
+function GameMain:setupIfaceMgr()
 	IfaceMgr:addItem(map)
 	IfaceMgr:addItem(collider)
 	IfaceMgr:addItem(Hero)
@@ -54,18 +61,20 @@ function setupIfaceMgr()
 	love.mousereleased = function(x,y,button) IfaceMgr:mouseReleased(x,y,button) end
 end
 
-function setupUpdateMgr()
-	UpdateMgr:addItem(Hero)
-	UpdateMgr:addItem(collider)
+function GameMain:setupUpdateMgr()
 	love.update = function(dt) UpdateMgr:update(dt) end
 	love.focus = function(f)
 		if (not f) then	UpdateMgr:pause()	end
 	end
 	
+	
+	UpdateMgr:addItem(Hero)
+	UpdateMgr:addItem(collider)
+	
 	UpdateMgr:unpause()
 end
 
-function setupKeyMgr()
+function GameMain:setupKeyMgr()
 	love.keypressed = function(key, unicode)	KeyMgr:keyPressed(key)	end
 	love.keyreleased = function(key, unicode)	KeyMgr:keyReleased(key)	end
 	
@@ -81,17 +90,16 @@ function setupKeyMgr()
 	KeyMgr:setReleaseBinding(rightkeys, function() if (Hero:getMoveDir() == 1) then Hero:moveDir(0) end end)
 end
 
-function setupCollisionMgr()
+function GameMain:setupCollisionMgr()
 	CollisionMgr:init(collider)
 	
-	CollisionMgr:setCallbacks("hero", "tile", on_collide, collision_stop)
+	local coll = function(dt,a,b,dx,dy)	self:on_collide(dt,a,b,dx,dy) end
+	local uncoll = function(dt,a,b)	self:collision_stop(dt,a,b) end
+	
+	CollisionMgr:setCallbacks("hero", "tile", coll, uncoll)
 end
 
-function love.quit()
-    print("Ended")
-end
-
-function findSolidTiles(map)
+function GameMain:findSolidTiles(map)
     local collidable_tiles = {}
     local layer = map.layers["ground"]
 
@@ -112,7 +120,7 @@ function findSolidTiles(map)
     return collidable_tiles
 end
 
-function add_bullet()
+function GameMain:add_bullet()
 	b_count = b_count + 1
 	local bullet = {}
 	
@@ -156,14 +164,15 @@ function add_bullet()
 	CollisionMgr:setCallbacks(bullet.shape.coll_class, "hero", hero_collide)
 end
 
-function create_bullet_factory()
+function GameMain:create_bullet_factory()
 	local factory = {}
 	local time_delta = 0
+	local sself = self
 	factory.update = function(self, dt)
 		time_delta = time_delta + dt
 		
 		if(time_delta > 0.5) then
-			add_bullet()
+			sself:add_bullet()
 			time_delta = 0
 		end
 	end
@@ -172,23 +181,28 @@ function create_bullet_factory()
 end
 
 
-function on_collide(dt, shape_a, shape_b, dx, dy)
+function GameMain:on_collide(dt, shape_a, shape_b, dx, dy)
 	Hero:collideWithSolid(dt, shape_a, shape_b, dx, dy)
 end
 
 
-function get_diff(shape_a, shape_b)
+function GameMain:get_diff(shape_a, shape_b)
 	local ax, ay = shape_a:center()
     local bx, by = shape_b:center()
 	return ax - bx, ay - by
 end
 
-function ouch()
-	Hero:setYVelocity(-150)
-	Hero:damage(17)
-end
 
-
-function collision_stop()
+function GameMain:collision_stop()
     Hero:endCollideWithSolid()
 end
+
+
+function GameMain:unload()
+	ImgMgr:unloadAll()
+	IfaceMgr:removeAll()
+	KeyMgr:removeAllBindings()
+	UpdateMgr:removeAll()
+end
+
+return GameMain

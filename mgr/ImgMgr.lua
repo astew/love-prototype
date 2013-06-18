@@ -13,6 +13,10 @@ ImgMgr.images = {}
 		self.images[key] = nil
 	end
 	
+	function ImgMgr:unloadAll()
+		self.images = {}
+	end
+	
 	function ImgMgr:getImage(key)
 		return self.images[key]
 	end

@@ -179,7 +179,9 @@ local ImgMgr = require("mgr/ImgMgr")
 	end
 	
 	function Hero:onNoLives()
-		love.event.push('quit') -- Quit the game.
+		if (self.noLives_callback ~= nil) then
+			self.noLives_callback()
+		end
 	end
 	
 	-----------------COLLISION-------------------
@@ -204,7 +206,7 @@ local ImgMgr = require("mgr/ImgMgr")
 		end
 		
 		
-		if (shape_b.hurty) then	ouch() end
+		if (shape_b.hurty) then	self:ouch() end
 		
 	--	if math.abs(dy) > math.abs(dx) then
 	--		if dy < 0 then
@@ -221,4 +223,8 @@ local ImgMgr = require("mgr/ImgMgr")
 		end
 	end
 	
+	function Hero:ouch()
+		self:setYVelocity(-150)
+		self:damage(17)
+	end
 return Hero
