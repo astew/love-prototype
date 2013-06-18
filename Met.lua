@@ -88,11 +88,11 @@ local ImgMgr = require("mgr/ImgMgr")
 	end
 
 
-	function Actor:setXPosition(x)
+	function Met:setXPosition(x)
 		local xx,yy = self:getPosition()
 		self.shape:moveTo(x,yy)
 	end
-	function Actor:setYPosition(y)
+	function Met:setYPosition(y)
 		local xx,yy = self:getPosition()
 		self.shape:moveTo(xx,y)
 	end
@@ -117,12 +117,12 @@ local ImgMgr = require("mgr/ImgMgr")
 		self:capXSpeed()
 	end
 
-	function Actor:setXVelocity(vx)
+	function Met:setXVelocity(vx)
 		self.velocity.x = vx
 		self:capXSpeed()
 	end
 
-	function Actor:setYVelocity(vy)
+	function Met:setYVelocity(vy)
 		self.velocity.y = vy
 	end
 
