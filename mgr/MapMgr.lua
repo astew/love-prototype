@@ -18,5 +18,21 @@ MapMgr.SolidTiles = {}
             end
         end
     end
+	
+	function MapMgr:iterateLayerObjectsByType(layer, objectType, callback)
+		local objects = self.map(layer).objects
+		for k,v in pairs(objects) do
+			if(v.type == objectType) then
+				callback(v)
+			end
+		end 
+    end
+	
+	function MapMgr:iterateLayerObjects(layer, callback)
+		local objects = self.map(layer).objects
+		for k,v in pairs(objects) do
+			callback(v)
+		end 
+    end
 
 return MapMgr

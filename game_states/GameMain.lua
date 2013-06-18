@@ -37,6 +37,8 @@ function GameMain:load(...)
 	self:setupCollisionMgr()
 
 	self:create_bullet_factory()
+	
+	--MapMgr:test("collision")
 end
 
 function GameMain:setupMet(x,y)
@@ -59,12 +61,17 @@ end
 
 
 function GameMain:setupIfaceMgr()
-	IfaceMgr:addItem(MapMgr.map)
+	IfaceMgr:addItem(MapMgr.map("ground"))
 	IfaceMgr:addItem(collider)
+	IfaceMgr:addItem(MapMgr.map("entities"))
 	IfaceMgr:addItem(Hero)
     IfaceMgr:addItem(Met)
+	IfaceMgr:addItem(MapMgr.map("foreground"))
 	IfaceMgr:addItem(hud)
-	love.draw = function() IfaceMgr:draw() end
+	love.draw = function() 
+		MapMgr.map:_updateTileRange()
+		IfaceMgr:draw() 
+	end
 	love.mousepressed = function(x,y,button) IfaceMgr:mousePressed(x,y,button) end
 	love.mousereleased = function(x,y,button) IfaceMgr:mouseReleased(x,y,button) end
 end
@@ -111,16 +118,25 @@ end
 
 function GameMain:findSolidTiles()
     local collidable_tiles = {}
-    MapMgr:iterateLayerTilesByType("ground", "solid", function(x, y, tile)
-        local ctile = collider:addRectangle(x*16, y*16, 16, 16)
+ --   MapMgr:iterateLayerTilesByType("ground", "solid", function(x, y, tile)
+ --       local ctile = collider:addRectangle(x*16, y*16, 16, 16)
+ --       ctile.coll_class = "tile"
+ --       collider:addToGroup("tiles", ctile)
+ --       collider:setPassive(ctile)
+ --       if tile.properties.hurty then
+ --           ctile.hurty = true
+ --       end
+ --       table.insert(collidable_tiles, ctile)
+ --   end)
+	
+	MapMgr:iterateLayerObjects("collision", function(object)
+        local ctile = collider:addRectangle(object.x, object.y, object.width, object.height)
         ctile.coll_class = "tile"
         collider:addToGroup("tiles", ctile)
         collider:setPassive(ctile)
-        if tile.properties.hurty then
-            ctile.hurty = true
-        end
         table.insert(collidable_tiles, ctile)
     end)
+	
     return collidable_tiles
 end
 

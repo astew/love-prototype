@@ -35,12 +35,26 @@
  </tileset>
  <layer name="ground" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0MsKgCAQRmG734Py/d+106LNbBLJLPgHzkIUPkbvnPOZyzXy5cuXL1++fPny5f/F301v+0/MnW93jN0z1k89X/JT/nOIn2Muv6SKairMuaGWOuppoJEmmmmhNfCNvT/tLXMHTTMKzQ==
+   eJzt0DEKACEMBdFUwpbq4fb+N9FaUBdNjAsz8OtHkkUkO88rfHx8fHx8fHyL3s5O+aPw/+unZqd9jWZ+e+Pqnau+dTf5ln/+4nuk4Ye6Z8OPzisdHgv4
   </data>
  </layer>
  <layer name="entities" width="32" height="32" opacity="0.4">
   <data encoding="base64" compression="zlib">
    eJztzkERAAAEADBV6B9SBi/nbAkWAQAATNR2gPNyO8BLDQJ/AEQ=
+  </data>
+ </layer>
+ <objectgroup name="collision" width="32" height="32" opacity="0.76">
+  <object x="32" y="448" width="64" height="16"/>
+  <object x="112" y="400" width="80" height="16"/>
+  <object x="224" y="368" width="64" height="16"/>
+  <object x="0" y="0" width="512" height="16"/>
+  <object x="496" y="16" width="16" height="480"/>
+  <object x="0" y="16" width="16" height="480"/>
+  <object x="0" y="496" width="512" height="16"/>
+ </objectgroup>
+ <layer name="foreground" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzty8sNgCAAwFAUEFT87D8tPTABJxPb5B0bgpmZmZmZmdk/WrAiIiFjQ0HFjgMnGi7cePAOM98X6trIARs=
   </data>
  </layer>
 </map>

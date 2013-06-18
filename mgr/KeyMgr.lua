@@ -9,7 +9,6 @@ KeyMgr.release_bindings = {}
 	function KeyMgr:setPressBinding(key, callback)
 		if (type(key) == "table") then
 			for k, v in pairs(key) do
-				print(k)
 				self.press_bindings[k] = callback
 			end
 		else
@@ -30,7 +29,6 @@ KeyMgr.release_bindings = {}
 	function KeyMgr:setReleaseBinding(key, callback)
 		if (type(key) == "table") then
 			for k, v in pairs(key) do
-				print(k)
 				self.release_bindings[k] = callback
 			end
 		else
