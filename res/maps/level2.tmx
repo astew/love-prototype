@@ -22,14 +22,19 @@
   </tile>
   <tile id="32">
    <properties>
+    <property name="actor" value="true"/>
     <property name="hero" value="true"/>
-    <property name="hidden" value="true"/>
    </properties>
   </tile>
  </tileset>
  <layer name="ground" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0MsKgCAQheHpblcwn8D3f8lOiyBmk0g2BGfgX4jCxxhEJBhnNfTp06dPnz59+vTp/8XfVV/7b8yTr3fM3TPXLz13Pxr7Jf85xbeYy69Rg1pUqXOHejQgh0Y0oRktaEVb4ht9f9reuAOeqwru
+   eJzt0MsKgCAQRmG734Py/d+106LNbBLJLPgHzkIUPkbvnPOZyzXy5cuXL1++fPny5f/F301v+0/MnW93jN0z1k89X/JT/nOIn2Muv6SKairMuaGWOuppoJEmmmmhNfCNvT/tLXMHTTMKzQ==
+  </data>
+ </layer>
+ <layer name="entities" width="32" height="32" opacity="0.4">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAIA6BVsX9JW8xDSEACAABA01wHeGkBYXgAIg==
   </data>
  </layer>
 </map>

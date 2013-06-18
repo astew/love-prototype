@@ -8,9 +8,6 @@ MapMgr.map = {}
 MapMgr.SolidTiles = {}
 
 	function MapMgr:loadMap(map_file)
-        for k,v in pairs(self.loader) do
-            print(k,v)
-        end
         self.map = self.loader.load(map_file)
 	end
 

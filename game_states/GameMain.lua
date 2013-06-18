@@ -29,8 +29,7 @@ function GameMain:load(...)
 
 	ImgMgr:loadImage("bullet", 	"res/graphics/bullet.png")
 
-    self:setupHero(32,32)
-	hud:init(Hero)
+    self:positionActors()
 
 	self:setupIfaceMgr()
 	self:setupUpdateMgr()
@@ -44,8 +43,10 @@ function GameMain:setupHero(x, y)
 	Hero = require("Hero")
 	Hero:init(collider,x,y)
 
-	Hero.onDeath_callback = function()	Hero:setPosition(32,32)	end
+	Hero.onDeath_callback = function()	Hero:setPosition(x,y)	end
 	Hero.noLives_callback = self.done_callback
+
+	hud:init(Hero)
 end
 
 
@@ -110,6 +111,16 @@ function GameMain:findSolidTiles()
         table.insert(collidable_tiles, ctile)
     end)
     return collidable_tiles
+end
+
+function GameMain:positionActors()
+    local entity_tiles = {}
+    MapMgr:iterateLayerTilesByType("entities", "actor", function(x, y, tile)
+        if tile.properties.hero then
+            GameMain:setupHero(x*16, y*16)
+        end
+    end)
+    return entity_tiles
 end
 
 function GameMain:add_bullet()
