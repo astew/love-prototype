@@ -234,6 +234,11 @@ local ImgMgr = require("mgr/ImgMgr")
 			elseif (cx < 0) then self:setXVelocity(250) end
 			self:damage(5)
 			self:move(dx*1.1,dy*1.1)
+		elseif (them.coll_class == "bullet") then
+			cx,cy = self.diff(me,them)
+			self:setYVelocity(-200)
+			self:damage(5)
+			self:move(dx*1.1,dy*1.1)
 		end
 	end
 	

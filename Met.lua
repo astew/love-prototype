@@ -213,9 +213,12 @@ local ImgMgr = require("mgr/ImgMgr")
 	end
 	
 	function Met:collide(dt, me, them, dx, dy)
-		
-		if (them.coll_class ~= nil and them.coll_class == "prop_tile") then
-			if (them.properties.hurty) then self:ouch() end
+		if (them.coll_class) then
+			if (them.coll_class == "prop_tile") then
+				if (them.properties.hurty) then self:ouch() end
+			elseif (them.coll_class == "bullet") then
+				self:ouch()
+			end
 		end
 	
 		if (self.checkProp(them, "solid")) then
