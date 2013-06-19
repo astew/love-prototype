@@ -4,13 +4,22 @@ local Actor = require "class/Actor"
 local Met = Actor:new()
 local ImgMgr = require("mgr/ImgMgr")
 
+	function Met:new(o)
+      o = o or {}   -- create object if user does not provide one
+      setmetatable(o, self)
+      self.__index = self
+      return o
+    end
 
 	function Met:init(...)
+		Actor.init(self)
 		self.collider = arg[1]
 
 		local x = arg[2]
 		local y = arg[3]
 		self.shape = self.collider:addRectangle(x,y,16,16)
+		self.shape.parent = self
+		
 		ImgMgr:loadImage("met", "res/graphics/met.png")
 
 		self.velocity = {x = 100, y = 1}
@@ -27,6 +36,7 @@ local ImgMgr = require("mgr/ImgMgr")
 		self.move_dir = -1
 
 		self.shape.coll_class = "met"
+		self.shape.collide = function(a,b,c,d,e,f) self:collide(b,c,d,e,f) end
 	end
 
 	function Met:draw()
@@ -171,13 +181,14 @@ local ImgMgr = require("mgr/ImgMgr")
         else
             return
 		end
-
+		
 
 		-- collision hero entites with level geometry
 		shape_a:move(dx*1.1, dy*1.1)
 
 		if (dx ~= 0) then
-			self:setXVelocity(0)
+			self:moveDir(self:getMoveDir()*-1)
+			return
 		end
 
 		if (dy ~= 0) then
@@ -195,19 +206,26 @@ local ImgMgr = require("mgr/ImgMgr")
         if floor_continues then
         else
             self:moveDir(self:getMoveDir()*-1)
+			return
         end
 
 
-		if (shape_b.hurty) then	self:ouch() end
-
-	--	if math.abs(dy) > math.abs(dx) then
-	--		if dy < 0 then
-	--			Hero:setYVelocity(0)
-	--		else
-	--			Hero:setYVelocity(1)
-	--		end
-	--	end
 	end
+	
+	function Met:collide(dt, me, them, dx, dy)
+		
+		if (them.coll_class ~= nil and them.coll_class == "prop_tile") then
+			if (them.properties.hurty) then self:ouch() end
+		end
+	
+		if (self.checkProp(them, "solid")) then
+			self:collideWithSolid(dt, me, them, dx, dy)
+		end
+	end
+	
+			function Met.checkProp(them, prop)
+				return	((them.properties ~= nil) and (them.properties[prop]))
+			end
 
 	function Met:endCollideWithSolid(dt, shape_a, shape_b)
 		if self:getYVelocity() == 0 then

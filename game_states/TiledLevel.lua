@@ -73,7 +73,7 @@ TiledLevel.entities = {}
 			love.graphics.push()
 			love.graphics.scale(1,1)
 			MapMgr.map:autoDrawRange(0,0,1)
-			if(self.entities.hero ~= nil) then
+			if(self.entities.hero) then
 				local x,y = self.entities.hero.shape:center()
 				x,y = x - love.graphics.getWidth() / 2,y - love.graphics.getHeight() / 2
 				love.graphics.translate(-x,-y)
@@ -82,6 +82,7 @@ TiledLevel.entities = {}
 			MapMgr.map:_updateTileRange()
 			IfaceMgr:draw() 
 			love.graphics.pop()
+			if(self.hud) then self.hud:draw() end
 		end
 		
 		--Mouse stuff
@@ -109,9 +110,16 @@ TiledLevel.entities = {}
 		end
 		MapMgr:iterateLayerTiles("entities", spawnEnt)
 		
+		local tileCol = function(x, y, tile)
+			local ctile = self.collider:addRectangle(x*16, y*16, 16,16)
+			ctile.coll_class = "prop_tile"
+			ctile.properties = tile.properties
+			self.collider:addToGroup("prop_tiles", ctile)
+			self.collider:setPassive(ctile)
+		end
+		MapMgr:iterateLayerTiles("collision_tiles", tileCol)
 		
 		self:_addIfNotNil("foreground")
-		--IfaceMgr:addItem(hud)
 		
 		UpdateMgr:addItem(self.collider)
 	end
@@ -157,6 +165,7 @@ TiledLevel.entities = {}
 	function TiledLevel:getKeyMgr()			return 	KeyMgr			end
 	function TiledLevel:getUpdateMgr()		return 	UpdateMgr		end
 	function TiledLevel:getIfaceMgr()		return 	IfaceMgr		end
+	function TiledLevel:getImgMgr()			return 	ImgMgr			end
 	
 	
 

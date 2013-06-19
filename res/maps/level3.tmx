@@ -72,4 +72,9 @@
    eJzty8sNgCAAwFAUEFT87D8tPTABJxPb5B0bgpmZmZmZmdk/WrAiIiFjQ0HFjgMnGi7cePAOM98X6trIARs=
   </data>
  </layer>
+ <layer name="collision_tiles" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAADwbhAAAAE=
+  </data>
+ </layer>
 </map>

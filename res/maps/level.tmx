@@ -49,6 +49,24 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="17" name="generic" tilewidth="16" tileheight="16">
+  <image source="tiles/generic_tiles.png" width="128" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="hurty" value="true"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="entFunc" value="met_spawn"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="entFunc" value="hero_spawn"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="ground" width="32" height="32">
   <properties>
    <property name="solid" value="true"/>
@@ -67,11 +85,15 @@
   <object x="16" y="288" width="192" height="32"/>
   <object x="176" y="320" width="160" height="32"/>
   <object x="304" y="288" width="192" height="32"/>
-  <object x="208" y="304" width="96" height="16"/>
  </objectgroup>
- <layer name="entities" width="32" height="32" opacity="0.93">
+ <layer name="entities" width="32" height="32" opacity="0.88">
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAMA6C+9W+4KpY9oIAE6HcAAADg2ACEuAAK
+   eJxjYBhYwAPFg8ENA+EWdLvp7QZc9tPLLTA7lLHYSY9wwOdXesXDQKeBoQZkyZQbBaNgFIxcMFo2jIJRMApGwSigFxjsdQ4A2ssCYA==
+  </data>
+ </layer>
+ <layer name="collision_tiles" width="32" height="32" opacity="0.62">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAIA7BZwL9ZFCzh5GiTJgAAfDclAFwtjmoAZw==
   </data>
  </layer>
 </map>

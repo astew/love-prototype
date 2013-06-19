@@ -3,9 +3,6 @@
 local Actor = {}
 
 
-Actor.health = {}
-Actor.health.max = 1
-Actor.health.current = 1
 
    function Actor:new(o)
       o = o or {}   -- create object if user does not provide one
@@ -15,7 +12,11 @@ Actor.health.current = 1
     end
 
 	--Take any necessary steps to initialize the Actor
-	function Actor:init(...)	end
+	function Actor:init(...)	
+		self.health = {}
+		self.health.max = 1
+		self.health.current = 1
+	end
 	
 	--Take any necessary steps to draw the Actor on the display
 	function Actor:draw()	end
@@ -65,7 +66,7 @@ Actor.health.current = 1
 	function Actor:setHealth(v)
 		self.health.current = v
 		
-		if(Actor:getHealth() <= 0) then
+		if(self:getHealth() <= 0) then
 			self:onDeath()
 		end
 	end
@@ -76,7 +77,7 @@ Actor.health.current = 1
 	
 	function Actor:damage(v)
 		self:deltaHealth(-1*v)
-		print("Damaged..")
+		print("Damaged:",v,"Remaining Health: ", self:getHealth())
 	end
 	function Actor:heal(v)
 		self:deltaHealth(v)
@@ -86,5 +87,12 @@ Actor.health.current = 1
 	end
 	
 	function Actor:onDeath()	end
+	
+	
+	function Actor.diff(shape_a, shape_b)
+		ax,ay = shape_a:center()
+		bx,by = shape_b:center()
+		return bx-ax,by-ay
+	end
 	
 return Actor

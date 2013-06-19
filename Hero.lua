@@ -4,13 +4,21 @@ local Actor = require "class/Actor"
 local Hero = Actor:new()
 local ImgMgr = require("mgr/ImgMgr")
 
+	function Hero:new(o)
+      o = o or {}   -- create object if user does not provide one
+      setmetatable(o, self)
+      self.__index = self
+      return o
+    end
 
 	function Hero:init(...)
+		Actor.init(self)
 		self.collider = arg[1]
 		
 		local x = arg[2]
 		local y = arg[3]
 		self.shape = self.collider:addRectangle(x,y,16,16)
+		self.shape.parent = self
 		ImgMgr:loadImage("hero", "res/graphics/ogmo.png")
 		
 		self.velocity = {x = 0, y = 1}
@@ -209,14 +217,23 @@ local ImgMgr = require("mgr/ImgMgr")
 			self.can_jump = (dy < 0)
 		end
 		
-		
-		if (shape_b.hurty) then	self:ouch() end
-		
 	end
 	
 	function Hero:collide(dt, me, them, dx, dy)
+		
+		if (them.coll_class ~= nil and them.coll_class == "prop_tile") then
+			if (them.properties.hurty) then self:ouch(dx,dy) end
+		end
+	
 		if (self.checkProp(them, "solid")) then
 			self:collideWithSolid(dt, me, them, dx, dy)
+		elseif (them.coll_class == "met") then
+			cx,cy = self.diff(me,them)
+			self:setYVelocity(-200)
+			if(cx > 0) then self:setXVelocity(-250)
+			elseif (cx < 0) then self:setXVelocity(250) end
+			self:damage(5)
+			self:move(dx*1.1,dy*1.1)
 		end
 	end
 	
@@ -230,8 +247,9 @@ local ImgMgr = require("mgr/ImgMgr")
 		end
 	end
 	
-	function Hero:ouch()
+	function Hero:ouch(dx, dy)
 		self:setYVelocity(-150)
 		self:damage(17)
+		self:move(dx*1.1,dy*1.1)
 	end
 return Hero
