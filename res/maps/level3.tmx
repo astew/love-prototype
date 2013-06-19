@@ -36,12 +36,12 @@
  </tileset>
  <layer name="ground" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0DEKACEMBdFUwpbq4fb+N9FaUBdNjAsz8OtHkkUkO88rfHx8fHx8fHyL3s5O+aPw/+unZqd9jWZ+e+Pqnau+dTf5ln/+4nuk4Ye6Z8OPzisdHgv4
+   eJzt1kkKgDAMBdCuBJfaw3kV79ELq6BQQpukmEEhHz4IFR8Rh+aUUnauV8LX9dfOsaVf19qnEv73fOqZGQ12DYv5tXzuvfGeH0v44Uv68NvxdGtUwx9N+P/1Jf5TVvP39vyU33qX3tj7XbimldouyLqmXTo29CX3PRwb+lLh2lL+dHZu2Jxc5y7OPQABPBP6
   </data>
  </layer>
  <layer name="entities" width="32" height="32" opacity="0.4">
   <data encoding="base64" compression="zlib">
-   eJztzkERAAAEADBV6B9SBi/nbAkWAQAATNR2gPNyO8BLDQJ/AEQ=
+   eJztzjERACAMBLBaAXP17wALbA/XREGq4N5KBwAAHrDTAb7X6QAjHXc9AKs=
   </data>
  </layer>
  <objectgroup name="collision" width="32" height="32" opacity="0.76">
@@ -52,6 +52,20 @@
   <object x="496" y="16" width="16" height="480"/>
   <object x="0" y="16" width="16" height="480"/>
   <object x="0" y="496" width="512" height="16"/>
+  <object x="400" y="384" width="80" height="16"/>
+  <object x="384" y="400" width="48" height="16"/>
+  <object x="368" y="416" width="48" height="16"/>
+  <object x="352" y="432" width="32" height="16"/>
+  <object x="336" y="448" width="32" height="16"/>
+  <object x="320" y="464" width="32" height="16"/>
+  <object x="304" y="480" width="32" height="16"/>
+  <object x="64" y="160" width="64" height="16"/>
+  <object x="224" y="192" width="16" height="16"/>
+  <object x="384" y="160" width="16" height="48"/>
+  <object x="304" y="288" width="96" height="16"/>
+  <object x="368" y="64" width="16" height="32"/>
+  <object x="384" y="80" width="48" height="16"/>
+  <object x="416" y="64" width="16" height="16"/>
  </objectgroup>
  <layer name="foreground" width="32" height="32">
   <data encoding="base64" compression="zlib">

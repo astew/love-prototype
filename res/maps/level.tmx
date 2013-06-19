@@ -43,6 +43,11 @@
     <property name="solid" value="true"/>
    </properties>
   </tile>
+  <tile id="8">
+   <properties>
+    <property name="entFunc" value="hero_spawn"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="ground" width="32" height="32">
   <properties>
@@ -50,6 +55,23 @@
   </properties>
   <data encoding="base64" compression="zlib">
    eJztlNsKgDAMQ+t1/v8Xq6DQF7eFbmRgAudxPXSEJjNLZFiRX3755c9lChL190zEP18sDyvBv7v3B8HfIvKP4fddLpHrOjrn9fsul7i7vn2AzkH/v2Y/5Bag/pr9kFswSv/kl1/+//qZnDbGBQ8=
+  </data>
+ </layer>
+ <objectgroup name="collision" width="32" height="32">
+  <object x="0" y="0" width="16" height="512"/>
+  <object x="16" y="496" width="480" height="16"/>
+  <object x="496" y="0" width="16" height="512"/>
+  <object x="16" y="0" width="480" height="16"/>
+  <object x="128" y="160" width="256" height="16"/>
+  <object x="224" y="192" width="64" height="32"/>
+  <object x="16" y="288" width="192" height="32"/>
+  <object x="176" y="320" width="160" height="32"/>
+  <object x="304" y="288" width="192" height="32"/>
+  <object x="208" y="304" width="96" height="16"/>
+ </objectgroup>
+ <layer name="entities" width="32" height="32" opacity="0.93">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAMA6C+9W+4KpY9oIAE6HcAAADg2ACEuAAK
   </data>
  </layer>
 </map>

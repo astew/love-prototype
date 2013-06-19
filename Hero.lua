@@ -32,6 +32,7 @@ local ImgMgr = require("mgr/ImgMgr")
 		
 		
 		self.shape.coll_class = "hero"
+		self.shape.collide = function(a,b,c,d,e,f) self:collide(b,c,d,e,f) end
 	end
 	
 	function Hero:draw()
@@ -211,15 +212,18 @@ local ImgMgr = require("mgr/ImgMgr")
 		
 		if (shape_b.hurty) then	self:ouch() end
 		
-	--	if math.abs(dy) > math.abs(dx) then
-	--		if dy < 0 then
-	--			Hero:setYVelocity(0)
-	--		else
-	--			Hero:setYVelocity(1)
-	--		end
-	--	end
 	end
 	
+	function Hero:collide(dt, me, them, dx, dy)
+		if (self.checkProp(them, "solid")) then
+			self:collideWithSolid(dt, me, them, dx, dy)
+		end
+	end
+	
+			function Hero.checkProp(them, prop)
+				return	((them.properties ~= nil) and (them.properties[prop]))
+			end
+			
 	function Hero:endCollideWithSolid(dt, shape_a, shape_b)
 		if self:getYVelocity() == 0 then
 			--self:setYVelocity(1)

@@ -62,7 +62,7 @@ end
 
 function GameMain:setupIfaceMgr()
 	IfaceMgr:addItem(MapMgr.map("ground"))
-	IfaceMgr:addItem(collider)
+	--IfaceMgr:addItem(collider)
 	IfaceMgr:addItem(MapMgr.map("entities"))
 	IfaceMgr:addItem(Hero)
     IfaceMgr:addItem(Met)

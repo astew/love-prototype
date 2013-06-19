@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="mud" tilewidth="16" tileheight="16">
+  <image source="tiles/mudbrick.png" width="256" height="256"/>
+  <tile id="32">
+   <properties>
+    <property name="entFunc" value="hero_spawn"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="ground" width="100" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmlsKgzAQAD1De/+7liL9SRu1ec6aGdg/wbizDwWf27Y9DVQIA32w0AcLfbDQBwt9sNAHC32w0AcLfdTzSKIGfbDQBwt9sFjJRzrnc/P+6nUl9z+D4uPKc/fKU2/+OesMHxFzOooWPsxtOyjzSnZ++bDe55H60EEZrWrYeVVPy/rVBwuSjwjfF73PRPJBZlR96IOFPljo45uZe0sfO5T3B32w0AeDT1/e1UfuW2b2PMpxZx/kvKekdXJHHxHI9as+xnFlZkb1EWEmlewtuo+Ie7nmfHQfUWhVI/ooo1e/6uOY0bNytI+jfUDYCbPPs2J/kGtiBR+kfJ+xgo9I1Pgg931U7A8Wuf8Trfk52B8s9MHi7eJsRhlj4wXoTyBp
+  </data>
+ </layer>
+ <layer name="entities" width="100" height="50" opacity="0.15">
+  <data encoding="base64" compression="zlib">
+   eJzt0bEJACAUQ0FXcSWX+PtvIFhZidik8A7SP0hrAAAAAAAAwK96OgAAAAAAAAAAALhW6QCW2kaeH+BspAMAgCcTSjICdw==
+  </data>
+ </layer>
+ <objectgroup name="collision" width="100" height="50" opacity="0.01">
+  <object x="0" y="784" width="1600" height="16"/>
+  <object x="48" y="736" width="128" height="16"/>
+  <object x="224" y="704" width="128" height="16"/>
+  <object x="432" y="640" width="128" height="16"/>
+  <object x="624" y="576" width="112" height="16"/>
+  <object x="720" y="560" width="32" height="16"/>
+  <object x="896" y="672" width="64" height="16"/>
+  <object x="960" y="656" width="128" height="16"/>
+  <object x="1072" y="640" width="64" height="16"/>
+  <object x="1136" y="624" width="96" height="16"/>
+  <object x="1232" y="608" width="80" height="16"/>
+  <object x="1296" y="592" width="16" height="16"/>
+  <object x="1312" y="592" width="16" height="16"/>
+  <object x="1328" y="576" width="48" height="16"/>
+  <object x="1376" y="560" width="64" height="16"/>
+  <object x="1440" y="544" width="48" height="16"/>
+  <object x="1488" y="528" width="48" height="16"/>
+  <object x="1520" y="512" width="48" height="16"/>
+  <object x="1552" y="480" width="16" height="32"/>
+  <object x="832" y="512" width="32" height="16"/>
+  <object x="848" y="496" width="112" height="16"/>
+  <object x="1040" y="448" width="48" height="16"/>
+  <object x="1088" y="432" width="32" height="16"/>
+  <object x="1168" y="384" width="48" height="16"/>
+  <object x="1200" y="368" width="32" height="16"/>
+  <object x="1280" y="336" width="16" height="16"/>
+  <object x="1296" y="320" width="64" height="16"/>
+  <object x="1408" y="240" width="48" height="16"/>
+  <object x="1440" y="224" width="16" height="16"/>
+  <object x="1280" y="160" width="64" height="16"/>
+  <object x="1088" y="224" width="96" height="16"/>
+  <object x="928" y="224" width="96" height="16"/>
+  <object x="672" y="240" width="96" height="16"/>
+  <object x="544" y="368" width="96" height="16"/>
+  <object x="448" y="256" width="80" height="16"/>
+  <object x="528" y="240" width="48" height="16"/>
+  <object x="256" y="272" width="64" height="16"/>
+  <object x="64" y="304" width="64" height="16"/>
+  <object x="48" y="320" width="32" height="16"/>
+  <object x="0" y="0" width="16" height="784"/>
+  <object x="16" y="0" width="1568" height="16"/>
+  <object x="1584" y="0" width="16" height="784"/>
+ </objectgroup>
+</map>
