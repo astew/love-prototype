@@ -14,7 +14,7 @@ endFunc = function()
 	
 	local newLevel = TiledLevel:new()
 	
-	newLevel:load("level4.tmx")
+	newLevel:load("level.tmx")
 	
 	--GameMain:load(gameDone)
 end

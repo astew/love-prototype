@@ -1,0 +1,20 @@
+
+Goals:
+1. Turn over as much control of the game as possible to the LEVEL EDITOR. 
+		The more varied the number of unique levels that can be generated 
+		without touching code, the better off we are.
+
+2. Keep the project designed such that it SCALES WELL.
+		Ideally the amount of work required to add a new feature to the 
+		game will be constant with respect to the total number of features 
+		in the game (asymptotically, that is. In the mean time while we're
+		still ironing the basics out, things will be worked and reworked
+		until they're good.)
+
+Things to do:
+
+- Move gravity into the level.
+- Add "use" functionality
+- Make jump be based on whether you're on top of the ground.
+- Move a lot of the functionality from Hero and Met to Actor.
+- Make a generic "Enemy" class

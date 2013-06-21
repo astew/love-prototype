@@ -37,6 +37,12 @@ function HealthHud:draw()
 					self.healthup.width, self.healthup.height)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Add a life!", self.healthup.x, self.healthup.y+5)
+	
+	--Usable
+	local shape = self.hero:canUse()
+	if (shape) then
+		love.graphics.print("Press 'e' to use", 20, 40)
+	end
 end
 
 	function HUD:mousePressed(x, y, button)
