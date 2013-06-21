@@ -1,5 +1,6 @@
 
 
+
 local TiledLevelLib = {}
 
 ----------------------------------------------
@@ -155,6 +156,25 @@ function TiledLevelLib.shoot_up(level, x, y, tile)
 	
 	cannon.properties.usable = function(hero)
 		hero:setYVelocity(-500)
+	end
+
+	IfaceMgr:addItem(cannon)
+end
+--------------------------------------------------
+function TiledLevelLib.changeLevel(level, x, y, tile)
+	local IfaceMgr = level:getIfaceMgr()
+	local collider = level:getCollider()
+	
+	local cannon = collider:addRectangle(x,y-16,16,32)
+	cannon.properties = tile.properties
+	collider:setGhost(ctile)
+	
+	cannon.properties.usable = function(hero)
+		local levelName = tile.properties.level
+		
+		level:unload()
+		local newLevel = level.getTiledLevel():new()
+		newLevel:load(levelName)
 	end
 
 	IfaceMgr:addItem(cannon)

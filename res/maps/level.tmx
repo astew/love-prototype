@@ -59,6 +59,12 @@
     <property name="hurty" value="true"/>
    </properties>
   </tile>
+  <tile id="3">
+   <properties>
+    <property name="entFunc" value="changeLevel"/>
+    <property name="level" value="level4.tmx"/>
+   </properties>
+  </tile>
   <tile id="12">
    <properties>
     <property name="entFunc" value="met_spawn"/>
@@ -101,7 +107,7 @@
  </objectgroup>
  <layer name="entities" width="32" height="32" opacity="0.88">
   <data encoding="base64" compression="zlib">
-   eJxjYBhYwAPFg8ENA+EWdLvp7QZc9tPLLTA7lLHYSY9wwOdXesXDQKeBoQZkB9oBo2AUjIIBAYpk6tOmqitGwSgYBaNgFIyCoQ0A2U8CVQ==
+   eJxjYBhYwAPFg8ENA+EWdLvp7QZc9tPLLTA7lLHYSY9wwOdXesXDQKeBoQZkB9oBo2AUjIIBAYpk6tNGYotQwyGjYBSMglEwCkbBEAYAZk4CaQ==
   </data>
  </layer>
  <layer name="collision_tiles" width="32" height="32" opacity="0.62">

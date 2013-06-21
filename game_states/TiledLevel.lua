@@ -178,5 +178,6 @@ TiledLevel.entities = {}
 	
 	function TiledLevel:getICU() return IfaceMgr, self.collider, UpdateMgr end
 
+	function TiledLevel.getTiledLevel() return TiledLevel end
 	
 return TiledLevel
