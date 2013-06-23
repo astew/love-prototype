@@ -1,5 +1,7 @@
 
 local Actor = require "class/Actor"
+local AnAL = require "lib/AnAL"
+local ImgMgr = require "mgr/ImgMgr"
 
 local Hero = Actor:new()
 
@@ -13,12 +15,12 @@ local Hero = Actor:new()
 	function Hero:init(level, position)
 		local image_info = {}
 		image_info.key = "hero"
-		Actor.init(self, level, image_info, position, {width=16, height=16})
+		Actor.init(self, level, image_info, position, {width=32, height=32})
 
 		
-		self.max_velocity.x = 500
+		self.max_velocity.x = 200
 		self.max_velocity.y = 3000
-		self.acceleration.x = 300
+		self.acceleration.x = 3300
 		self.onDeath_callback = nil
 		
 		self:setMaxHealth(200)
@@ -26,6 +28,53 @@ local Hero = Actor:new()
 		self:setLives(4)
 		
 		self.coll_class = "hero"
+		
+		local img = love.graphics.newImage("res/graphics/mmrun.png")
+		self.anim = newAnimation(img, 44, 44, 0.1, 10)
+		self.anim.scale = 32/44
+	end
+	
+	-----------DRAW--------
+	function Hero:draw()
+		
+		local img = self.level:getImgMgr()
+		local x,y = self:getPosition()
+		local w,h = self:getSize()
+		
+		if ( (not self:getFacingReverseDraw()) or self:getFacing() == -1 ) then
+			self.anim:draw(x,y,0,self.anim.scale,self.anim.scale,22,22)
+		else
+			self.anim:draw(x,y,0,-self.anim.scale,self.anim.scale,22,22)
+		end
+	end
+	
+	function Hero:update(dt)
+		local dx = 0
+		local dy = 0
+		local move_dir = self:getMoveDir()
+		local xdir, ydir = self:getXYDir()
+		
+		if (move_dir == -1 or move_dir == 1) then
+			self:accelerate(move_dir * self.acceleration.x*dt,0)
+			self.anim:update(dt) 
+		else
+			if  ( self:getXVelocity() == 0 ) then
+			elseif (math.abs(self:getXVelocity()) < self.acceleration.x*dt) then
+				self:setXVelocity(0)
+				self.anim:reset()
+			else 
+				self:accelerate(-1 * xdir * (self.acceleration.x * dt),0)
+				self.anim:update(dt) 
+			end
+		end
+		
+		self:capVelocity()
+		
+		dx = self:getXVelocity() * dt
+		dy = self:getYVelocity()*dt
+		self:accelerate(0,self:levelGravity()*dt)
+
+		self:move(dx, dy)
 	end
 	
 	------------HERO ACTIONS---------------

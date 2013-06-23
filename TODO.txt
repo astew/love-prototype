@@ -13,8 +13,10 @@ Goals:
 
 Things to do:
 
-- Move gravity into the level.
-- Add "use" functionality
-- Make jump be based on whether you're on top of the ground.
-- Move a lot of the functionality from Hero and Met to Actor.
-- Make a generic "Enemy" class
+DONE - Move gravity into the level.
+DONE - Add "use" functionality
+DONE - Make jump be based on whether you're on top of the ground.
+DONE - Move a lot of the functionality from Hero and Met to Actor.
+- Make a generic "Enemy" class which Met extends
+- Make separate "use"s for something you're in front of and something you're facing
+- Add in animation support for entities
