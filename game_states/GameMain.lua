@@ -118,16 +118,6 @@ end
 
 function GameMain:findSolidTiles()
     local collidable_tiles = {}
- --   MapMgr:iterateLayerTilesByType("ground", "solid", function(x, y, tile)
- --       local ctile = collider:addRectangle(x*16, y*16, 16, 16)
- --       ctile.coll_class = "tile"
- --       collider:addToGroup("tiles", ctile)
- --       collider:setPassive(ctile)
- --       if tile.properties.hurty then
- --           ctile.hurty = true
- --       end
- --       table.insert(collidable_tiles, ctile)
- --   end)
 	
 	MapMgr:iterateLayerObjects("collision", function(object)
         local ctile = collider:addRectangle(object.x, object.y, object.width, object.height)

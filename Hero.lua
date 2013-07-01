@@ -89,7 +89,7 @@ local Hero = Actor:new()
 	function Hero:canJump()
 		local c = self.level:getCollider()
 		local x,y = self:getPosition()
-		local shapes = c:shapesAt(x,y+10)
+		local shapes = c:shapesAt(x,y+20)
 		for _, shape in ipairs(shapes) do
 			if (self.checkProp(shape, "solid")) then return true	end
 		end
